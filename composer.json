@@ -1,0 +1,14 @@
+{
+    "name": "willemo/floorplanner-v2",
+    "description": "Floorplanner API v2 client for PHP",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Willem Oostendorp",
+            "email": "willem@soomedia.nl"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
