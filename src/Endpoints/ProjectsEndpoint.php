@@ -19,7 +19,7 @@ class ProjectsEndpoint extends BaseEndpoint
      */
     public function create(array $params): array
     {
-        $response = $this->httpClient->request('POST', '/projects.json', [
+        $response = $this->httpClient->request('POST', 'projects.json', [
             'json' => $params,
         ]);
 
