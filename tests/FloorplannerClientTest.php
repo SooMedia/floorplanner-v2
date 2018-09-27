@@ -40,6 +40,21 @@ class FloorplannerClientTest extends TestCase
     /**
      * @covers ::__construct
      * @covers ::getHttpClient
+     * @covers ::users
+     * @covers \SooMedia\Floorplanner\Endpoints\BaseEndpoint::__construct
+     */
+    public function testUsers(): void
+    {
+        $client = new FloorplannerClient('mock_api_key');
+
+        $users = $client->users();
+
+        $this->assertInstanceOf(BaseEndpoint::class, $users);
+    }
+
+    /**
+     * @covers ::__construct
+     * @covers ::getHttpClient
      * @covers ::projects
      * @covers \SooMedia\Floorplanner\Endpoints\BaseEndpoint::__construct
      */

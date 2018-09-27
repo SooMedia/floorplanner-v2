@@ -5,6 +5,7 @@ namespace SooMedia\Floorplanner;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use SooMedia\Floorplanner\Endpoints\ProjectsEndpoint;
+use SooMedia\Floorplanner\Endpoints\UsersEndpoint;
 
 /**
  * Class FloorplannerClient
@@ -66,6 +67,19 @@ class FloorplannerClient
         }
 
         return $this->httpClient;
+    }
+
+    /**
+     * Get the users endpoint.
+     *
+     * @param  ClientInterface|null $httpClient
+     * @return UsersEndpoint
+     */
+    public function users(ClientInterface $httpClient = null): UsersEndpoint
+    {
+        $httpClient = $httpClient ?: $this->getHttpClient();
+
+        return new UsersEndpoint($httpClient);
     }
 
     /**
