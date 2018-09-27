@@ -69,37 +69,6 @@ class ProjectsEndpointTest extends TestCase
     }
 
     /**
-     * @covers ::show
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function testShow(): void
-    {
-        $response = [
-            'id' => 170280,
-            'user_id' => 103,
-            'public' => false,
-            'name' => 'My new house',
-            'description' => 'This is my first floor plan',
-            'project_url' => '2fv03b',
-            'created_at' => '2017-03-23T15:48:19.000Z',
-            'updated_at' => '2017-03-23T15:48:19.000Z',
-            'enable_autosave' => false,
-            'external_identifier' => 'ID3344',
-            'exported_at' => null,
-        ];
-
-        $handler = new MockHandler([
-            new Response(200, [], json_encode($response)),
-        ]);
-
-        $httpClient = new Client(['handler' => $handler]);
-
-        $result = $this->client->projects($httpClient)->show(170280);
-
-        $this->assertEquals($response, $result);
-    }
-
-    /**
      * @covers ::index
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
@@ -128,6 +97,37 @@ class ProjectsEndpointTest extends TestCase
         $httpClient = new Client(['handler' => $handler]);
 
         $result = $this->client->projects($httpClient)->index();
+
+        $this->assertEquals($response, $result);
+    }
+
+    /**
+     * @covers ::show
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function testShow(): void
+    {
+        $response = [
+            'id' => 170280,
+            'user_id' => 103,
+            'public' => false,
+            'name' => 'My new house',
+            'description' => 'This is my first floor plan',
+            'project_url' => '2fv03b',
+            'created_at' => '2017-03-23T15:48:19.000Z',
+            'updated_at' => '2017-03-23T15:48:19.000Z',
+            'enable_autosave' => false,
+            'external_identifier' => 'ID3344',
+            'exported_at' => null,
+        ];
+
+        $handler = new MockHandler([
+            new Response(200, [], json_encode($response)),
+        ]);
+
+        $httpClient = new Client(['handler' => $handler]);
+
+        $result = $this->client->projects($httpClient)->show(170280);
 
         $this->assertEquals($response, $result);
     }

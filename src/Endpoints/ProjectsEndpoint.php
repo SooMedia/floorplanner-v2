@@ -29,26 +29,6 @@ class ProjectsEndpoint extends BaseEndpoint
     }
 
     /**
-     * Show a project.
-     *
-     * @param  int    $identifier
-     * @param  string $format
-     * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @see http://docs.floorplanner.com/floorplanner/api-v2#show-json--fml
-     */
-    public function show(int $identifier, string $format = 'json'): array
-    {
-        $uri = 'projects/' . $identifier . '.' . $format;
-
-        $response = $this->httpClient->request('GET', $uri);
-
-        $json = $response->getBody();
-
-        return json_decode($json, true);
-    }
-
-    /**
      * List a page of projects.
      *
      * @param  int $page
@@ -65,6 +45,26 @@ class ProjectsEndpoint extends BaseEndpoint
                 'per_page' => $perPage,
             ],
         ]);
+
+        $json = $response->getBody();
+
+        return json_decode($json, true);
+    }
+
+    /**
+     * Show a project.
+     *
+     * @param  int    $identifier
+     * @param  string $format
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @see http://docs.floorplanner.com/floorplanner/api-v2#show-json--fml
+     */
+    public function show(int $identifier, string $format = 'json'): array
+    {
+        $uri = 'projects/' . $identifier . '.' . $format;
+
+        $response = $this->httpClient->request('GET', $uri);
 
         $json = $response->getBody();
 
