@@ -59,7 +59,7 @@ Below is an overview of the implementation of the API endpoints and from which v
 
 | Endpoint            | Implemented | Version |
 |---------------------|-------------|---------|
-| Users               | No          |         |
+| Users               | Yes         | v0.0.3  |
 | Projects            | Yes         | v0.0.1  |
 | Project Permissions | No          |         |
 | Media               | No          |         |
