@@ -74,8 +74,9 @@ class FloorplannerClient
      * @param  ClientInterface|null $httpClient
      * @return ProjectsEndpoint
      */
-    public function projects(?ClientInterface $httpClient = null): ProjectsEndpoint
-    {
+    public function projects(
+        ClientInterface $httpClient = null
+    ): ProjectsEndpoint {
         $httpClient = $httpClient ?: $this->getHttpClient();
 
         return new ProjectsEndpoint($httpClient);
