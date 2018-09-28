@@ -4,6 +4,7 @@ namespace SooMedia\Floorplanner;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
+use SooMedia\Floorplanner\Endpoints\ProjectPermissionsEndpoint;
 use SooMedia\Floorplanner\Endpoints\ProjectsEndpoint;
 use SooMedia\Floorplanner\Endpoints\UsersEndpoint;
 
@@ -17,7 +18,7 @@ class FloorplannerClient
     /**
      * @var string
      */
-    protected static $baseUri = 'https://floorplanner.com/api/v2';
+    protected static $baseUri = 'https://floorplanner.com/api/v2/';
 
     /**
      * @var string
@@ -94,5 +95,19 @@ class FloorplannerClient
         $httpClient = $httpClient ?: $this->getHttpClient();
 
         return new ProjectsEndpoint($httpClient);
+    }
+
+    /**
+     * Get the project permissions endpoint.
+     *
+     * @param  ClientInterface|null $httpClient
+     * @return ProjectPermissionsEndpoint
+     */
+    public function projectPermissions(
+        ClientInterface $httpClient = null
+    ): ProjectPermissionsEndpoint {
+        $httpClient = $httpClient ?: $this->getHttpClient();
+
+        return new ProjectPermissionsEndpoint($httpClient);
     }
 }

@@ -61,7 +61,7 @@ Below is an overview of the implementation of the API endpoints and from which v
 |---------------------|-------------|---------|
 | Users               | Yes         | v0.0.3  |
 | Projects            | Yes         | v0.0.1  |
-| Project Permissions | No          |         |
+| Project Permissions | Yes         | v0.0.4  |
 | Media               | No          |         |
 | Designs             | No          |         |
 | Floors              | No          |         |

@@ -66,4 +66,19 @@ class FloorplannerClientTest extends TestCase
 
         $this->assertInstanceOf(BaseEndpoint::class, $projects);
     }
+
+    /**
+     * @covers ::__construct
+     * @covers ::getHttpClient
+     * @covers ::projectPermissions
+     * @covers \SooMedia\Floorplanner\Endpoints\BaseEndpoint::__construct
+     */
+    public function testProjectPermissions(): void
+    {
+        $client = new FloorplannerClient('mock_api_key');
+
+        $projectPermissions = $client->projectPermissions();
+
+        $this->assertInstanceOf(BaseEndpoint::class, $projectPermissions);
+    }
 }
