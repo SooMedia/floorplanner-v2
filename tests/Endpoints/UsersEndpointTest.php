@@ -2,11 +2,8 @@
 
 namespace Tests\Endpoints;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
-use SooMedia\Floorplanner\FloorplannerClient;
 
 /**
  * Class UsersEndpointTest
@@ -14,30 +11,23 @@ use SooMedia\Floorplanner\FloorplannerClient;
  * @package Tests\Endpoints
  * @coversDefaultClass \SooMedia\Floorplanner\Endpoints\UsersEndpoint
  */
-class UsersEndpointTest extends TestCase
+class UsersEndpointTest extends EndpointTestCase
 {
-    /**
-     * @var FloorplannerClient
-     */
-    protected $client;
-
-    /**
-     * This method is called before each test.
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->client = new FloorplannerClient('mock_api_key');
-    }
-
     /**
      * @covers ::create
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testCreate(): void
     {
-        $response = [
+        $requestBody = [
+            'user' => [
+                'email' => 'some@email.woohoo',
+                'password' => 'sent-over-https',
+                'measurement_system' => 'METRIC',
+            ],
+        ];
+
+        $responseBody = [
             'country_code' => null,
             'created_at' => '2015-06-01T14:08:32.000Z',
             'creator_id' => null,
@@ -53,21 +43,32 @@ class UsersEndpointTest extends TestCase
             'role' => 'subuser',
         ];
 
-        $handler = new MockHandler([
-            new Response(200, [], json_encode($response)),
-        ]);
+        $container = [];
 
-        $httpClient = new Client(['handler' => $handler]);
+        $client = $this->getClient([
+            new Response(200, [], json_encode($responseBody)),
+        ], $container);
 
-        $result = $this->client->users($httpClient)->create([
-            'user' => [
-                'email' => 'some@email.woohoo',
-                'password' => 'sent-over-https',
-                'measurement_system' => 'METRIC',
+        $result = $client->users()->create($requestBody);
+
+        $this->assertEquals($responseBody, $result);
+        $this->assertCount(1, $container);
+
+        $transaction = $container[0];
+
+        /** @var Request $request */
+        $request = $transaction['request'];
+
+        $this->validateRequest(
+            $request,
+            'POST',
+            'https://floorplanner.com/api/v2/users.json',
+            [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Basic ' . base64_encode('mock_api_key:x'),
             ],
-        ]);
-
-        $this->assertEquals($response, $result);
+            json_encode($requestBody)
+        );
     }
 
     /**
@@ -76,7 +77,7 @@ class UsersEndpointTest extends TestCase
      */
     public function testIndex(): void
     {
-        $response = [
+        $responseBody = [
             [
                 'country_code' => null,
                 'created_at' => '2015-06-01T14:08:32.000Z',
@@ -94,15 +95,30 @@ class UsersEndpointTest extends TestCase
             ],
         ];
 
-        $handler = new MockHandler([
-            new Response(200, [], json_encode($response)),
-        ]);
+        $container = [];
 
-        $httpClient = new Client(['handler' => $handler]);
+        $client = $this->getClient([
+            new Response(200, [], json_encode($responseBody)),
+        ], $container);
 
-        $result = $this->client->users($httpClient)->index();
+        $result = $client->users()->index();
 
-        $this->assertEquals($response, $result);
+        $this->assertEquals($responseBody, $result);
+        $this->assertCount(1, $container);
+
+        $transaction = $container[0];
+
+        /** @var Request $request */
+        $request = $transaction['request'];
+
+        $this->validateRequest(
+            $request,
+            'GET',
+            'https://floorplanner.com/api/v2/users.json?page=1&per_page=50&profile=0&company=0',
+            [
+                'Authorization' => 'Basic ' . base64_encode('mock_api_key:x'),
+            ]
+        );
     }
 
     /**
@@ -111,7 +127,7 @@ class UsersEndpointTest extends TestCase
      */
     public function testShow(): void
     {
-        $response = [
+        $responseBody = [
             'country_code' => null,
             'created_at' => '2015-06-01T14:08:32.000Z',
             'creator_id' => null,
@@ -128,15 +144,30 @@ class UsersEndpointTest extends TestCase
             'updated_at' => '2016-06-01T14:08:32.000Z',
         ];
 
-        $handler = new MockHandler([
-            new Response(200, [], json_encode($response)),
-        ]);
+        $container = [];
 
-        $httpClient = new Client(['handler' => $handler]);
+        $client = $this->getClient([
+            new Response(200, [], json_encode($responseBody)),
+        ], $container);
 
-        $result = $this->client->users($httpClient)->show(6);
+        $result = $client->users()->show(6);
 
-        $this->assertEquals($response, $result);
+        $this->assertEquals($responseBody, $result);
+        $this->assertCount(1, $container);
+
+        $transaction = $container[0];
+
+        /** @var Request $request */
+        $request = $transaction['request'];
+
+        $this->validateRequest(
+            $request,
+            'GET',
+            'https://floorplanner.com/api/v2/users/6.json',
+            [
+                'Authorization' => 'Basic ' . base64_encode('mock_api_key:x'),
+            ]
+        );
     }
 
     /**
@@ -145,7 +176,15 @@ class UsersEndpointTest extends TestCase
      */
     public function testUpdate(): void
     {
-        $response = [
+        $requestBody = [
+            'user' => [
+                'email' => 'some@email.woohoo',
+                'password' => 'sent_over_https',
+                'measurement_system' => 'IMPERIAL',
+            ],
+        ];
+
+        $responseBody = [
             'country_code' => null,
             'created_at' => '2015-06-01T14:08:32.000Z',
             'creator_id' => null,
@@ -160,21 +199,32 @@ class UsersEndpointTest extends TestCase
             'updated_at' => '2016-06-01T14:08:32.000Z',
         ];
 
-        $handler = new MockHandler([
-            new Response(200, [], json_encode($response)),
-        ]);
+        $container = [];
 
-        $httpClient = new Client(['handler' => $handler]);
+        $client = $this->getClient([
+            new Response(200, [], json_encode($responseBody)),
+        ], $container);
 
-        $result = $this->client->users($httpClient)->update(6, [
-            'user' => [
-                'email' => 'some@email.woohoo',
-                'password' => 'sent_over_https',
-                'measurement_system' => 'IMPERIAL',
+        $result = $client->users()->update(6, $requestBody);
+
+        $this->assertEquals($responseBody, $result);
+        $this->assertCount(1, $container);
+
+        $transaction = $container[0];
+
+        /** @var Request $request */
+        $request = $transaction['request'];
+
+        $this->validateRequest(
+            $request,
+            'PUT',
+            'https://floorplanner.com/api/v2/users/6.json',
+            [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Basic ' . base64_encode('mock_api_key:x'),
             ],
-        ]);
-
-        $this->assertEquals($response, $result);
+            json_encode($requestBody)
+        );
     }
 
     /**
@@ -183,15 +233,30 @@ class UsersEndpointTest extends TestCase
      */
     public function testDestroy(): void
     {
-        $handler = new MockHandler([
+        $container = [];
+
+        $client = $this->getClient([
             new Response(200),
-        ]);
+        ], $container);
 
-        $httpClient = new Client(['handler' => $handler]);
-
-        $result = $this->client->users($httpClient)->destroy(6);
+        $result = $client->users()->destroy(6);
 
         $this->assertTrue($result);
+        $this->assertCount(1, $container);
+
+        $transaction = $container[0];
+
+        /** @var Request $request */
+        $request = $transaction['request'];
+
+        $this->validateRequest(
+            $request,
+            'DELETE',
+            'https://floorplanner.com/api/v2/users/6.json',
+            [
+                'Authorization' => 'Basic ' . base64_encode('mock_api_key:x'),
+            ]
+        );
     }
 
     /**
@@ -200,7 +265,7 @@ class UsersEndpointTest extends TestCase
      */
     public function testToken(): void
     {
-        $response = [
+        $responseBody = [
             'id' => 1,
             'token' => '36db96d625be097617dda5624b2550e7',
             'valid_until' => '2017-01-01T12:08:32.000Z',
@@ -211,14 +276,29 @@ class UsersEndpointTest extends TestCase
             'updated_at' => '2016-06-01T14:08:32.000Z',
         ];
 
-        $handler = new MockHandler([
-            new Response(200, [], json_encode($response)),
-        ]);
+        $container = [];
 
-        $httpClient = new Client(['handler' => $handler]);
+        $client = $this->getClient([
+            new Response(200, [], json_encode($responseBody)),
+        ], $container);
 
-        $result = $this->client->users($httpClient)->token(6);
+        $result = $client->users()->token(6);
 
-        $this->assertEquals($response, $result);
+        $this->assertEquals($responseBody, $result);
+        $this->assertCount(1, $container);
+
+        $transaction = $container[0];
+
+        /** @var Request $request */
+        $request = $transaction['request'];
+
+        $this->validateRequest(
+            $request,
+            'GET',
+            'https://floorplanner.com/api/v2/users/6/token.json',
+            [
+                'Authorization' => 'Basic ' . base64_encode('mock_api_key:x'),
+            ]
+        );
     }
 }
