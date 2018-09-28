@@ -2,11 +2,8 @@
 
 namespace Tests\Endpoints;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
-use SooMedia\Floorplanner\FloorplannerClient;
 
 /**
  * Class ProjectsEndpointTest
@@ -14,30 +11,23 @@ use SooMedia\Floorplanner\FloorplannerClient;
  * @package Tests\Endpoints
  * @coversDefaultClass \SooMedia\Floorplanner\Endpoints\ProjectsEndpoint
  */
-class ProjectsEndpointTest extends TestCase
+class ProjectsEndpointTest extends EndpointTestCase
 {
-    /**
-     * @var FloorplannerClient
-     */
-    protected $client;
-
-    /**
-     * This method is called before each test.
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->client = new FloorplannerClient('mock_api_key');
-    }
-
     /**
      * @covers ::create
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testCreate(): void
     {
-        $response = [
+        $requestBody = [
+            'project' => [
+                'name' => 'My new house',
+                'description' => 'This is my first floor plan',
+                'external_identifier' => 'ID3344',
+            ],
+        ];
+
+        $responseBody = [
             'id' => 170280,
             'user_id' => 103,
             'public' => false,
@@ -51,21 +41,32 @@ class ProjectsEndpointTest extends TestCase
             'exported_at' => null,
         ];
 
-        $handler = new MockHandler([
-            new Response(200, [], json_encode($response)),
-        ]);
+        $container = [];
 
-        $httpClient = new Client(['handler' => $handler]);
+        $client = $this->getClient([
+            new Response(200, [], json_encode($responseBody)),
+        ], $container);
 
-        $result = $this->client->projects($httpClient)->create([
-            'project' => [
-                'name' => 'My new house',
-                'description' => 'This is my first floor plan',
-                'external_identifier' => 'ID3344',
+        $result = $client->projects()->create($requestBody);
+
+        $this->assertEquals($responseBody, $result);
+        $this->assertCount(1, $container);
+
+        $transaction = $container[0];
+
+        /** @var Request $request */
+        $request = $transaction['request'];
+
+        $this->validateRequest(
+            $request,
+            'POST',
+            'https://floorplanner.com/api/v2/projects.json',
+            [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Basic ' . base64_encode('mock_api_key:x'),
             ],
-        ]);
-
-        $this->assertEquals($response, $result);
+            json_encode($requestBody)
+        );
     }
 
     /**
@@ -74,7 +75,7 @@ class ProjectsEndpointTest extends TestCase
      */
     public function testIndex(): void
     {
-        $response = [
+        $responseBody = [
             [
                 'id' => 170280,
                 'user_id' => 103,
@@ -90,15 +91,30 @@ class ProjectsEndpointTest extends TestCase
             ],
         ];
 
-        $handler = new MockHandler([
-            new Response(200, [], json_encode($response)),
-        ]);
+        $container = [];
 
-        $httpClient = new Client(['handler' => $handler]);
+        $client = $this->getClient([
+            new Response(200, [], json_encode($responseBody)),
+        ], $container);
 
-        $result = $this->client->projects($httpClient)->index();
+        $result = $client->projects()->index();
 
-        $this->assertEquals($response, $result);
+        $this->assertEquals($responseBody, $result);
+        $this->assertCount(1, $container);
+
+        $transaction = $container[0];
+
+        /** @var Request $request */
+        $request = $transaction['request'];
+
+        $this->validateRequest(
+            $request,
+            'GET',
+            'https://floorplanner.com/api/v2/projects.json?page=1&per_page=50',
+            [
+                'Authorization' => 'Basic ' . base64_encode('mock_api_key:x'),
+            ]
+        );
     }
 
     /**
@@ -107,7 +123,7 @@ class ProjectsEndpointTest extends TestCase
      */
     public function testShow(): void
     {
-        $response = [
+        $responseBody = [
             'id' => 170280,
             'user_id' => 103,
             'public' => false,
@@ -121,15 +137,30 @@ class ProjectsEndpointTest extends TestCase
             'exported_at' => null,
         ];
 
-        $handler = new MockHandler([
-            new Response(200, [], json_encode($response)),
-        ]);
+        $container = [];
 
-        $httpClient = new Client(['handler' => $handler]);
+        $client = $this->getClient([
+            new Response(200, [], json_encode($responseBody)),
+        ], $container);
 
-        $result = $this->client->projects($httpClient)->show(170280);
+        $result = $client->projects()->show(170280);
 
-        $this->assertEquals($response, $result);
+        $this->assertEquals($responseBody, $result);
+        $this->assertCount(1, $container);
+
+        $transaction = $container[0];
+
+        /** @var Request $request */
+        $request = $transaction['request'];
+
+        $this->validateRequest(
+            $request,
+            'GET',
+            'https://floorplanner.com/api/v2/projects/170280.json',
+            [
+                'Authorization' => 'Basic ' . base64_encode('mock_api_key:x'),
+            ]
+        );
     }
 
     /**
@@ -138,7 +169,14 @@ class ProjectsEndpointTest extends TestCase
      */
     public function testUpdate(): void
     {
-        $response = [
+        $requestBody = [
+            'public' => false,
+            'name' => 'My new house',
+            'description' => 'This is my first floor plan',
+            'external_identifier' => 'ID3344',
+        ];
+
+        $responseBody = [
             'id' => 170280,
             'user_id' => 103,
             'public' => false,
@@ -152,20 +190,32 @@ class ProjectsEndpointTest extends TestCase
             'exported_at' => null,
         ];
 
-        $handler = new MockHandler([
-            new Response(200, [], json_encode($response)),
-        ]);
+        $container = [];
 
-        $httpClient = new Client(['handler' => $handler]);
+        $client = $this->getClient([
+            new Response(200, [], json_encode($responseBody)),
+        ], $container);
 
-        $result = $this->client->projects($httpClient)->update(170280, [
-            'public' => false,
-            'name' => 'My new house',
-            'description' => 'This is my first floor plan',
-            'external_identifier' => 'ID3344',
-        ]);
+        $result = $client->projects()->update(170280, $requestBody);
 
-        $this->assertEquals($response, $result);
+        $this->assertEquals($responseBody, $result);
+        $this->assertCount(1, $container);
+
+        $transaction = $container[0];
+
+        /** @var Request $request */
+        $request = $transaction['request'];
+
+        $this->validateRequest(
+            $request,
+            'PUT',
+            'https://floorplanner.com/api/v2/projects/170280.json',
+            [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Basic ' . base64_encode('mock_api_key:x'),
+            ],
+            json_encode($requestBody)
+        );
     }
 
     /**
@@ -174,15 +224,30 @@ class ProjectsEndpointTest extends TestCase
      */
     public function testDestroy(): void
     {
-        $handler = new MockHandler([
+        $container = [];
+
+        $client = $this->getClient([
             new Response(200),
-        ]);
+        ], $container);
 
-        $httpClient = new Client(['handler' => $handler]);
-
-        $result = $this->client->projects($httpClient)->destroy(170280);
+        $result = $client->projects()->destroy(170280);
 
         $this->assertTrue($result);
+        $this->assertCount(1, $container);
+
+        $transaction = $container[0];
+
+        /** @var Request $request */
+        $request = $transaction['request'];
+
+        $this->validateRequest(
+            $request,
+            'DELETE',
+            'https://floorplanner.com/api/v2/projects/170280.json',
+            [
+                'Authorization' => 'Basic ' . base64_encode('mock_api_key:x'),
+            ]
+        );
     }
 
     /**
@@ -191,13 +256,7 @@ class ProjectsEndpointTest extends TestCase
      */
     public function testExport(): void
     {
-        $handler = new MockHandler([
-            new Response(200),
-        ]);
-
-        $httpClient = new Client(['handler' => $handler]);
-
-        $result = $this->client->projects($httpClient)->export(170280, [
+        $requestBody = [
             'id' => 1,
             'designs' => [
                 32144,
@@ -232,8 +291,33 @@ class ProjectsEndpointTest extends TestCase
                     'div' => 5,
                 ],
             ],
-        ]);
+        ];
+
+        $container = [];
+
+        $client = $this->getClient([
+            new Response(200),
+        ], $container);
+
+        $result = $client->projects()->export(170280, $requestBody);
 
         $this->assertTrue($result);
+        $this->assertCount(1, $container);
+
+        $transaction = $container[0];
+
+        /** @var Request $request */
+        $request = $transaction['request'];
+
+        $this->validateRequest(
+            $request,
+            'POST',
+            'https://floorplanner.com/api/v2/projects/170280/export.json',
+            [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Basic ' . base64_encode('mock_api_key:x'),
+            ],
+            json_encode($requestBody)
+        );
     }
 }
