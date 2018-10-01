@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace SooMedia\Floorplanner\Endpoints;
 
@@ -23,7 +24,7 @@ class ProjectsEndpoint extends BaseEndpoint
             'json' => $params,
         ]);
 
-        $json = $response->getBody();
+        $json = (string) $response->getBody();
 
         return json_decode($json, true);
     }
@@ -46,7 +47,7 @@ class ProjectsEndpoint extends BaseEndpoint
             ],
         ]);
 
-        $json = $response->getBody();
+        $json = (string) $response->getBody();
 
         return json_decode($json, true);
     }
@@ -66,7 +67,7 @@ class ProjectsEndpoint extends BaseEndpoint
 
         $response = $this->httpClient->request('GET', $uri);
 
-        $json = $response->getBody();
+        $json = (string) $response->getBody();
 
         return json_decode($json, true);
     }
@@ -92,7 +93,7 @@ class ProjectsEndpoint extends BaseEndpoint
             'json' => $params,
         ]);
 
-        $json = $response->getBody();
+        $json = (string) $response->getBody();
 
         return json_decode($json, true);
     }
