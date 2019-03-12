@@ -19,12 +19,17 @@ class FloorplannerClient
     /**
      * @var string
      */
-    protected static $baseUri = 'https://floorplanner.com/api/v2/';
+    public const BASE_URI = 'https://floorplanner.com/api/v2/';
 
     /**
      * @var string
      */
     protected $apiKey;
+
+    /**
+     * @var string
+     */
+    protected $baseUri;
 
     /**
      * @var array
@@ -40,11 +45,17 @@ class FloorplannerClient
      * FloorplannerClient constructor.
      *
      * @param string $apiKey
+     * @param string $baseUri
      * @param array  $httpClientOptions
      */
-    public function __construct(string $apiKey, array $httpClientOptions = [])
-    {
+    public function __construct(
+        string $apiKey,
+        $baseUri = self::BASE_URI,
+        array $httpClientOptions = []
+    ) {
         $this->apiKey = $apiKey;
+
+        $this->baseUri = $baseUri;
 
         $this->httpClientOptions = $httpClientOptions;
     }
@@ -59,7 +70,7 @@ class FloorplannerClient
         if (!isset($this->httpClient)) {
             $config = array_merge(
                 [
-                    'base_uri' => self::$baseUri,
+                    'base_uri' => $this->baseUri,
                     'auth' => [$this->apiKey, 'x'],
                 ],
                 $this->httpClientOptions
