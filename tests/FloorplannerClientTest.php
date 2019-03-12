@@ -27,7 +27,11 @@ class FloorplannerClientTest extends TestCase
             'timeout' => 2.0,
         ];
 
-        $client = new FloorplannerClient($apiKey, $httpClientOptions);
+        $client = new FloorplannerClient(
+            $apiKey,
+            FloorplannerClient::BASE_URI,
+            $httpClientOptions
+        );
 
         $httpClient = $client->getHttpClient();
 

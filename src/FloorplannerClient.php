@@ -50,7 +50,7 @@ class FloorplannerClient
      */
     public function __construct(
         string $apiKey,
-        $baseUri = self::BASE_URI,
+        string $baseUri = self::BASE_URI,
         array $httpClientOptions = []
     ) {
         $this->apiKey = $apiKey;
