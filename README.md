@@ -53,6 +53,15 @@ $response = $client->projects()->create([
 */
 ```
 
+If you want to change the base URI used, you can supply that as the second argument for the client's constructor:
+
+```php
+$client = new \SooMedia\Floorplanner\FloorplannerClient(
+    'your_api_key',
+    'https://sandbox.floorplanner.com/api/v2/'
+);
+```
+
 ## Implemented endpoints
 
 Below is an overview of the implementation of the API endpoints and from which version the implementation is available.
