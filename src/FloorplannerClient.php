@@ -37,7 +37,7 @@ class FloorplannerClient
     protected $httpClientOptions;
 
     /**
-     * @var ClientInterface
+     * @var \GuzzleHttp\ClientInterface
      */
     protected $httpClient;
 
@@ -63,7 +63,7 @@ class FloorplannerClient
     /**
      * Get the HTTP client.
      *
-     * @return ClientInterface
+     * @return \GuzzleHttp\ClientInterface
      */
     public function getHttpClient(): ClientInterface
     {
@@ -85,8 +85,8 @@ class FloorplannerClient
     /**
      * Get the users endpoint.
      *
-     * @param  ClientInterface|null $httpClient
-     * @return UsersEndpoint
+     * @param  \GuzzleHttp\ClientInterface|null $httpClient
+     * @return \SooMedia\Floorplanner\Endpoints\UsersEndpoint
      */
     public function users(ClientInterface $httpClient = null): UsersEndpoint
     {
@@ -98,8 +98,8 @@ class FloorplannerClient
     /**
      * Get the projects endpoint.
      *
-     * @param  ClientInterface|null $httpClient
-     * @return ProjectsEndpoint
+     * @param  \GuzzleHttp\ClientInterface|null $httpClient
+     * @return \SooMedia\Floorplanner\Endpoints\ProjectsEndpoint
      */
     public function projects(
         ClientInterface $httpClient = null
@@ -112,8 +112,8 @@ class FloorplannerClient
     /**
      * Get the project permissions endpoint.
      *
-     * @param  ClientInterface|null $httpClient
-     * @return ProjectPermissionsEndpoint
+     * @param  \GuzzleHttp\ClientInterface|null $httpClient
+     * @return \SooMedia\Floorplanner\Endpoints\ProjectPermissionsEndpoint
      */
     public function projectPermissions(
         ClientInterface $httpClient = null

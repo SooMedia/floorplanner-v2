@@ -13,14 +13,14 @@ use GuzzleHttp\ClientInterface;
 abstract class BaseEndpoint
 {
     /**
-     * @var ClientInterface
+     * @var \GuzzleHttp\ClientInterface
      */
     protected $httpClient;
 
     /**
      * Projects constructor.
      *
-     * @param ClientInterface $httpClient
+     * @param \GuzzleHttp\ClientInterface $httpClient
      */
     public function __construct(ClientInterface $httpClient)
     {
