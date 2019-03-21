@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use GuzzleHttp\ClientInterface;
 use PHPUnit\Framework\TestCase;
 use SooMedia\Floorplanner\Endpoints\BaseEndpoint;
 use SooMedia\Floorplanner\FloorplannerClient;
@@ -34,13 +35,9 @@ class FloorplannerClientTest extends TestCase
             $httpClientOptions
         );
 
-        $httpClient = $client->getHttpClient();
-
-        $this->assertAttributeEquals('mock_api_key', 'apiKey', $client);
-        $this->assertAttributeEquals([
-            'timeout' => 2.0,
-        ], 'httpClientOptions', $client);
-        $this->assertAttributeEquals($httpClient, 'httpClient', $client);
+        $this->assertEquals($apiKey, $client->getApiKey());
+        $this->assertEquals($httpClientOptions, $client->getHttpClientOptions());
+        $this->assertInstanceOf(ClientInterface::class, $client->getHttpClient());
     }
 
     /**
