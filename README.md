@@ -58,7 +58,7 @@ If you want to change the base URI used, you can supply that as the second argum
 ```php
 $client = new \SooMedia\Floorplanner\FloorplannerClient(
     'your_api_key',
-    'https://sandbox.floorplanner.com/api/v2/'
+    'https://sandbox.floorplanner.com/'
 );
 ```
 

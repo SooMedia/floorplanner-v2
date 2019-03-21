@@ -19,7 +19,12 @@ class FloorplannerClient
     /**
      * @var string
      */
-    public const BASE_URI = 'https://floorplanner.com/api/v2/';
+    public const BASE_URI = 'https://floorplanner.com/';
+
+    /**
+     * @var string
+     */
+    public const API_ENDPOINT = 'api/v2/';
 
     /**
      * @var string
@@ -30,6 +35,11 @@ class FloorplannerClient
      * @var string
      */
     protected $baseUri;
+
+    /**
+     * @var string
+     */
+    protected $apiEndpoint;
 
     /**
      * @var array
@@ -46,16 +56,20 @@ class FloorplannerClient
      *
      * @param string $apiKey
      * @param string $baseUri
+     * @param string $apiEndpoint
      * @param array  $httpClientOptions
      */
     public function __construct(
         string $apiKey,
         string $baseUri = self::BASE_URI,
+        string $apiEndpoint = self::API_ENDPOINT,
         array $httpClientOptions = []
     ) {
         $this->apiKey = $apiKey;
 
         $this->baseUri = $baseUri;
+
+        $this->apiEndpoint = $apiEndpoint;
 
         $this->httpClientOptions = $httpClientOptions;
     }
@@ -70,7 +84,7 @@ class FloorplannerClient
         if (!isset($this->httpClient)) {
             $config = array_merge(
                 [
-                    'base_uri' => $this->baseUri,
+                    'base_uri' => $this->buildBaseUri(),
                     'auth' => [$this->apiKey, 'x'],
                 ],
                 $this->httpClientOptions
@@ -121,5 +135,55 @@ class FloorplannerClient
         $httpClient = $httpClient ?: $this->getHttpClient();
 
         return new ProjectPermissionsEndpoint($httpClient);
+    }
+
+    /**
+     * Get the API key.
+     *
+     * @return string
+     */
+    public function getApiKey(): string
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * Get the base URI.
+     *
+     * @return string
+     */
+    public function getBaseUri(): string
+    {
+        return $this->baseUri;
+    }
+
+    /**
+     * Get the API endpoint.
+     *
+     * @return string
+     */
+    public function getApiEndpoint(): string
+    {
+        return $this->apiEndpoint;
+    }
+
+    /**
+     * Get the HTTP client options.
+     *
+     * @return array
+     */
+    public function getHttpClientOptions(): array
+    {
+        return $this->httpClientOptions;
+    }
+
+    /**
+     * Get the base URI with the API base endpoint attached.
+     *
+     * @return string
+     */
+    protected function buildBaseUri(): string
+    {
+        return rtrim($this->baseUri, '/') . '/' . $this->apiEndpoint;
     }
 }

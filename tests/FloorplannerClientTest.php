@@ -30,6 +30,7 @@ class FloorplannerClientTest extends TestCase
         $client = new FloorplannerClient(
             $apiKey,
             FloorplannerClient::BASE_URI,
+            FloorplannerClient::API_ENDPOINT,
             $httpClientOptions
         );
 
