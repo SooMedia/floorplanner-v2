@@ -16,7 +16,10 @@ class UsersEndpointTest extends EndpointTestCase
 {
     /**
      * @covers ::create
+     * @covers ::makeRequest
+     * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      */
     public function testCreate(): void
     {
@@ -74,7 +77,10 @@ class UsersEndpointTest extends EndpointTestCase
 
     /**
      * @covers ::index
+     * @covers ::makeRequest
+     * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      */
     public function testIndex(): void
     {
@@ -124,7 +130,10 @@ class UsersEndpointTest extends EndpointTestCase
 
     /**
      * @covers ::show
+     * @covers ::makeRequest
+     * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      */
     public function testShow(): void
     {
@@ -173,7 +182,10 @@ class UsersEndpointTest extends EndpointTestCase
 
     /**
      * @covers ::update
+     * @covers ::makeRequest
+     * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      */
     public function testUpdate(): void
     {
@@ -230,7 +242,10 @@ class UsersEndpointTest extends EndpointTestCase
 
     /**
      * @covers ::destroy
+     * @covers ::makeRequest
+     * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      */
     public function testDestroy(): void
     {
@@ -262,7 +277,10 @@ class UsersEndpointTest extends EndpointTestCase
 
     /**
      * @covers ::token
+     * @covers ::makeRequest
+     * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      */
     public function testToken(): void
     {

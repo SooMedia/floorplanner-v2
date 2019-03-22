@@ -16,7 +16,10 @@ class ProjectsEndpointTest extends EndpointTestCase
 {
     /**
      * @covers ::create
+     * @covers ::makeRequest
+     * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      */
     public function testCreate(): void
     {
@@ -72,7 +75,10 @@ class ProjectsEndpointTest extends EndpointTestCase
 
     /**
      * @covers ::index
+     * @covers ::makeRequest
+     * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      */
     public function testIndex(): void
     {
@@ -120,7 +126,10 @@ class ProjectsEndpointTest extends EndpointTestCase
 
     /**
      * @covers ::show
+     * @covers ::makeRequest
+     * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      */
     public function testShow(): void
     {
@@ -166,7 +175,10 @@ class ProjectsEndpointTest extends EndpointTestCase
 
     /**
      * @covers ::update
+     * @covers ::makeRequest
+     * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      */
     public function testUpdate(): void
     {
@@ -221,7 +233,10 @@ class ProjectsEndpointTest extends EndpointTestCase
 
     /**
      * @covers ::destroy
+     * @covers ::makeRequest
+     * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      */
     public function testDestroy(): void
     {
@@ -253,7 +268,10 @@ class ProjectsEndpointTest extends EndpointTestCase
 
     /**
      * @covers ::export
+     * @covers ::makeRequest
+     * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      */
     public function testExport(): void
     {

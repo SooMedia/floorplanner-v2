@@ -39,6 +39,7 @@ abstract class EndpointTestCase extends TestCase
         return new FloorplannerClient(
             'mock_api_key',
             FloorplannerClient::BASE_URI,
+            FloorplannerClient::API_ENDPOINT,
             [
                 'handler' => $handlerStack,
             ]

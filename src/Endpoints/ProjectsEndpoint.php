@@ -16,17 +16,16 @@ class ProjectsEndpoint extends BaseEndpoint
      * @param  array $params
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#create-1
      */
     public function create(array $params): array
     {
-        $response = $this->httpClient->request('POST', 'projects.json', [
+        $response = $this->makeRequest('POST', 'projects.json', [
             'json' => $params,
         ]);
 
-        $json = (string) $response->getBody();
-
-        return json_decode($json, true);
+        return $this->processJsonResponse($response);
     }
 
     /**
@@ -36,40 +35,38 @@ class ProjectsEndpoint extends BaseEndpoint
      * @param  int $perPage
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#index-1
      */
     public function index(int $page = 1, int $perPage = 50): array
     {
-        $response = $this->httpClient->request('GET', 'projects.json', [
+        $response = $this->makeRequest('GET', 'projects.json', [
             'query' => [
                 'page' => $page,
                 'per_page' => $perPage,
             ],
         ]);
 
-        $json = (string) $response->getBody();
-
-        return json_decode($json, true);
+        return $this->processJsonResponse($response);
     }
 
     /**
      * Show a project.
      *
-     * @param  int    $identifier
-     * @param  string $format
+     * @param  int $identifier
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#show-json--fml
      */
-    public function show(int $identifier, string $format = 'json'): array
+    public function show(int $identifier): array
     {
-        $uri = 'projects/' . $identifier . '.' . $format;
+        $response = $this->makeRequest(
+            'GET',
+            'projects/' . $identifier . '.json'
+        );
 
-        $response = $this->httpClient->request('GET', $uri);
-
-        $json = (string) $response->getBody();
-
-        return json_decode($json, true);
+        return $this->processJsonResponse($response);
     }
 
     /**
@@ -80,6 +77,7 @@ class ProjectsEndpoint extends BaseEndpoint
      * @param  string $method
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#update-1
      */
     public function update(
@@ -87,15 +85,15 @@ class ProjectsEndpoint extends BaseEndpoint
         array $params,
         string $method = 'PUT'
     ): array {
-        $uri = 'projects/' . $identifier . '.json';
+        $response = $this->makeRequest(
+            $method,
+            'projects/' . $identifier . '.json',
+            [
+                'json' => $params,
+            ]
+        );
 
-        $response = $this->httpClient->request($method, $uri, [
-            'json' => $params,
-        ]);
-
-        $json = (string) $response->getBody();
-
-        return json_decode($json, true);
+        return $this->processJsonResponse($response);
     }
 
     /**
@@ -104,13 +102,15 @@ class ProjectsEndpoint extends BaseEndpoint
      * @param  int $identifier
      * @return bool
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#destroy-1
      */
     public function destroy(int $identifier): bool
     {
-        $uri = 'projects/' . $identifier . '.json';
-
-        $this->httpClient->request('DELETE', $uri);
+        $this->makeRequest(
+            'DELETE',
+            'projects/' . $identifier . '.json'
+        );
 
         return true;
     }
@@ -122,15 +122,18 @@ class ProjectsEndpoint extends BaseEndpoint
      * @param  array $params
      * @return bool
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#export-2d
      */
     public function export(int $identifier, array $params): bool
     {
-        $uri = 'projects/' . $identifier . '/export.json';
-
-        $this->httpClient->request('POST', $uri, [
-            'json' => $params,
-        ]);
+        $this->makeRequest(
+            'POST',
+            'projects/' . $identifier . '/export.json',
+            [
+                'json' => $params,
+            ]
+        );
 
         return true;
     }

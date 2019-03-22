@@ -16,17 +16,16 @@ class UsersEndpoint extends BaseEndpoint
      * @param  array $params
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#create
      */
     public function create(array $params): array
     {
-        $response = $this->httpClient->request('POST', 'users.json', [
+        $response = $this->makeRequest('POST', 'users.json', [
             'json' => $params,
         ]);
 
-        $json = (string) $response->getBody();
-
-        return json_decode($json, true);
+        return $this->processJsonResponse($response);
     }
 
     /**
@@ -38,6 +37,7 @@ class UsersEndpoint extends BaseEndpoint
      * @param  bool $company
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#index
      */
     public function index(
@@ -46,7 +46,7 @@ class UsersEndpoint extends BaseEndpoint
         bool $profile = false,
         bool $company = false
     ): array {
-        $response = $this->httpClient->request('GET', 'users.json', [
+        $response = $this->makeRequest('GET', 'users.json', [
             'query' => [
                 'page' => $page,
                 'per_page' => $perPage,
@@ -55,9 +55,7 @@ class UsersEndpoint extends BaseEndpoint
             ],
         ]);
 
-        $json = (string) $response->getBody();
-
-        return json_decode($json, true);
+        return $this->processJsonResponse($response);
     }
 
     /**
@@ -66,17 +64,14 @@ class UsersEndpoint extends BaseEndpoint
      * @param  int $identifier
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#show
      */
     public function show(int $identifier): array
     {
-        $uri = 'users/' . $identifier . '.json';
+        $response = $this->makeRequest('GET', 'users/' . $identifier . '.json');
 
-        $response = $this->httpClient->request('GET', $uri);
-
-        $json = (string) $response->getBody();
-
-        return json_decode($json, true);
+        return $this->processJsonResponse($response);
     }
 
     /**
@@ -87,6 +82,7 @@ class UsersEndpoint extends BaseEndpoint
      * @param  string $method
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#update
      */
     public function update(
@@ -94,15 +90,15 @@ class UsersEndpoint extends BaseEndpoint
         array $params,
         string $method = 'PUT'
     ): array {
-        $uri = 'users/' . $identifier . '.json';
+        $response = $this->makeRequest(
+            $method,
+            'users/' . $identifier . '.json',
+            [
+                'json' => $params,
+            ]
+        );
 
-        $response = $this->httpClient->request($method, $uri, [
-            'json' => $params,
-        ]);
-
-        $json = (string) $response->getBody();
-
-        return json_decode($json, true);
+        return $this->processJsonResponse($response);
     }
 
     /**
@@ -111,13 +107,12 @@ class UsersEndpoint extends BaseEndpoint
      * @param  int $identifier
      * @return bool
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#destroy
      */
     public function destroy(int $identifier): bool
     {
-        $uri = 'users/' . $identifier . '.json';
-
-        $this->httpClient->request('DELETE', $uri);
+        $this->makeRequest('DELETE', 'users/' . $identifier . '.json');
 
         return true;
     }
@@ -128,16 +123,16 @@ class UsersEndpoint extends BaseEndpoint
      * @param  int $identifier
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#token
      */
     public function token(int $identifier): array
     {
-        $uri = 'users/' . $identifier . '/token.json';
+        $response = $this->makeRequest(
+            'GET',
+            'users/' . $identifier . '/token.json'
+        );
 
-        $response = $this->httpClient->request('GET', $uri);
-
-        $json = (string) $response->getBody();
-
-        return json_decode($json, true);
+        return $this->processJsonResponse($response);
     }
 }

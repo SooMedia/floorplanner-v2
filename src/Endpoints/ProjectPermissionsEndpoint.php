@@ -17,21 +17,16 @@ class ProjectPermissionsEndpoint extends BaseEndpoint
      * @param  array $params
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#create-2
      */
     public function create(int $projectId, array $params): array
     {
-        $response = $this->httpClient->request(
-            'POST',
-            $this->buildUri($projectId),
-            [
-                'json' => $params,
-            ]
-        );
+        $response = $this->makeRequest('POST', $this->buildUri($projectId), [
+            'json' => $params,
+        ]);
 
-        $json = (string) $response->getBody();
-
-        return json_decode($json, true);
+        return $this->processJsonResponse($response);
     }
 
     /**
@@ -40,18 +35,14 @@ class ProjectPermissionsEndpoint extends BaseEndpoint
      * @param  int $projectId
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#index-2
      */
     public function index(int $projectId): array
     {
-        $response = $this->httpClient->request(
-            'GET',
-            $this->buildUri($projectId)
-        );
+        $response = $this->makeRequest('GET', $this->buildUri($projectId));
 
-        $json = (string) $response->getBody();
-
-        return json_decode($json, true);
+        return $this->processJsonResponse($response);
     }
 
     /**
@@ -61,18 +52,17 @@ class ProjectPermissionsEndpoint extends BaseEndpoint
      * @param  int $permissionId
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#show-1
      */
     public function show(int $projectId, int $permissionId): array
     {
-        $response = $this->httpClient->request(
+        $response = $this->makeRequest(
             'GET',
             $this->buildUri($projectId, $permissionId)
         );
 
-        $json = (string) $response->getBody();
-
-        return json_decode($json, true);
+        return $this->processJsonResponse($response);
     }
 
     /**
@@ -84,6 +74,7 @@ class ProjectPermissionsEndpoint extends BaseEndpoint
      * @param  string $method
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#update-2
      */
     public function update(
@@ -92,7 +83,7 @@ class ProjectPermissionsEndpoint extends BaseEndpoint
         array $params,
         string $method = 'PUT'
     ): array {
-        $response = $this->httpClient->request(
+        $response = $this->makeRequest(
             $method,
             $this->buildUri($projectId, $permissionId),
             [
@@ -100,9 +91,7 @@ class ProjectPermissionsEndpoint extends BaseEndpoint
             ]
         );
 
-        $json = (string) $response->getBody();
-
-        return json_decode($json, true);
+        return $this->processJsonResponse($response);
     }
 
     /**
@@ -112,11 +101,12 @@ class ProjectPermissionsEndpoint extends BaseEndpoint
      * @param  int $permissionId
      * @return bool
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#destroy-2
      */
     public function destroy(int $projectId, int $permissionId): bool
     {
-        $this->httpClient->request(
+        $this->makeRequest(
             'DELETE',
             $this->buildUri($projectId, $permissionId)
         );
