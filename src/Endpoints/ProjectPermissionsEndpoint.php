@@ -17,7 +17,8 @@ class ProjectPermissionsEndpoint extends BaseEndpoint
      * @param  array $params
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#create-2
      */
     public function create(int $projectId, array $params): array
@@ -35,7 +36,8 @@ class ProjectPermissionsEndpoint extends BaseEndpoint
      * @param  int $projectId
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#index-2
      */
     public function index(int $projectId): array
@@ -52,7 +54,8 @@ class ProjectPermissionsEndpoint extends BaseEndpoint
      * @param  int $permissionId
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#show-1
      */
     public function show(int $projectId, int $permissionId): array
@@ -74,7 +77,8 @@ class ProjectPermissionsEndpoint extends BaseEndpoint
      * @param  string $method
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#update-2
      */
     public function update(
@@ -101,7 +105,8 @@ class ProjectPermissionsEndpoint extends BaseEndpoint
      * @param  int $permissionId
      * @return bool
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#destroy-2
      */
     public function destroy(int $projectId, int $permissionId): bool

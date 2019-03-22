@@ -19,7 +19,8 @@ class BaseEndpointTest extends EndpointTestCase
      * @covers ::makeRequest
      * @covers ::getExceptionMessage
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      */
     public function testServerException(): void
     {
@@ -43,7 +44,8 @@ class BaseEndpointTest extends EndpointTestCase
      * @covers ::makeRequest
      * @covers ::getExceptionMessage
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      */
     public function testClientException(): void
     {
@@ -67,7 +69,8 @@ class BaseEndpointTest extends EndpointTestCase
      * @covers ::makeRequest
      * @covers ::getExceptionMessage
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      */
     public function testExceptionWithoutJson(): void
     {

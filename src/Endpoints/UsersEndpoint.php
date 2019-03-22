@@ -16,7 +16,8 @@ class UsersEndpoint extends BaseEndpoint
      * @param  array $params
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#create
      */
     public function create(array $params): array
@@ -37,7 +38,8 @@ class UsersEndpoint extends BaseEndpoint
      * @param  bool $company
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#index
      */
     public function index(
@@ -64,7 +66,8 @@ class UsersEndpoint extends BaseEndpoint
      * @param  int $identifier
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#show
      */
     public function show(int $identifier): array
@@ -82,7 +85,8 @@ class UsersEndpoint extends BaseEndpoint
      * @param  string $method
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#update
      */
     public function update(
@@ -107,7 +111,8 @@ class UsersEndpoint extends BaseEndpoint
      * @param  int $identifier
      * @return bool
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#destroy
      */
     public function destroy(int $identifier): bool
@@ -123,7 +128,8 @@ class UsersEndpoint extends BaseEndpoint
      * @param  int $identifier
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      * @see http://docs.floorplanner.com/floorplanner/api-v2#token
      */
     public function token(int $identifier): array

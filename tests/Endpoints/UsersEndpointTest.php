@@ -19,7 +19,8 @@ class UsersEndpointTest extends EndpointTestCase
      * @covers ::makeRequest
      * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      */
     public function testCreate(): void
     {
@@ -80,7 +81,8 @@ class UsersEndpointTest extends EndpointTestCase
      * @covers ::makeRequest
      * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      */
     public function testIndex(): void
     {
@@ -133,7 +135,8 @@ class UsersEndpointTest extends EndpointTestCase
      * @covers ::makeRequest
      * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      */
     public function testShow(): void
     {
@@ -185,7 +188,8 @@ class UsersEndpointTest extends EndpointTestCase
      * @covers ::makeRequest
      * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      */
     public function testUpdate(): void
     {
@@ -245,7 +249,8 @@ class UsersEndpointTest extends EndpointTestCase
      * @covers ::makeRequest
      * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      */
     public function testDestroy(): void
     {
@@ -280,7 +285,8 @@ class UsersEndpointTest extends EndpointTestCase
      * @covers ::makeRequest
      * @covers ::processJsonResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
      */
     public function testToken(): void
     {

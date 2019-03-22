@@ -8,7 +8,6 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use Psr\Http\Message\ResponseInterface;
 use SooMedia\Floorplanner\Exceptions\FloorplannerClientException;
-use SooMedia\Floorplanner\Exceptions\FloorplannerException;
 use SooMedia\Floorplanner\Exceptions\FloorplannerServerException;
 
 /**
@@ -40,7 +39,8 @@ abstract class BaseEndpoint
      * @param  string $uri
      * @param  array  $options
      * @return ResponseInterface
-     * @throws FloorplannerException
+     * @throws FloorplannerServerException
+     * @throws FloorplannerClientException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function makeRequest(
