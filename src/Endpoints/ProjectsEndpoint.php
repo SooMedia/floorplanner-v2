@@ -73,6 +73,26 @@ class ProjectsEndpoint extends BaseEndpoint
     }
 
     /**
+     * Show the project's FML.
+     *
+     * @param  int $identifier
+     * @return string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @see http://docs.floorplanner.com/floorplanner/api-v2#show-json--fml
+     */
+    public function showFml(int $identifier): string
+    {
+        $response = $this->makeRequest(
+            'GET',
+            'projects/' . $identifier . '.fml'
+        );
+
+        return (string) $response->getBody();
+    }
+
+    /**
      * Update a project.
      *
      * @param  int    $identifier
