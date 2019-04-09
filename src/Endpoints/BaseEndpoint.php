@@ -94,7 +94,7 @@ abstract class BaseEndpoint
 
         $decoded = json_decode($body, true);
 
-        if ($decoded === null) {
+        if ($decoded === null || !array_key_exists('error', $decoded)) {
             return $body;
         }
 
