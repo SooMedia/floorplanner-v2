@@ -131,6 +131,68 @@ class UsersEndpointTest extends EndpointTestCase
     }
 
     /**
+     * @covers ::search
+     * @covers ::makeRequest
+     * @covers ::processJsonResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
+     */
+    public function testSearch(): void
+    {
+        $responseBody = [
+            'search_after' => [
+                1552599968000,
+                6.757487,
+                'user#222222',
+            ],
+            'total' => 1,
+            'results' => [
+                [
+                    'country_code' => null,
+                    'created_at' => '2015-06-01T14:08:32.000Z',
+                    'creator_id' => null,
+                    'currency' => null,
+                    'email' => 'some@email.test',
+                    'external_identifier' => 'ID12346',
+                    'id' => 6,
+                    'language' => null,
+                    'last_seen_at' => null,
+                    'measurement_system' => 'METRIC',
+                    'parent_id' => 5,
+                    'updated_at' => '2016-06-01T14:08:32.000Z',
+                    'role' => 'free',
+                ],
+            ],
+        ];
+
+        $container = [];
+
+        $client = $this->getClient([
+            new Response(200, [], json_encode($responseBody)),
+        ], $container);
+
+        $result = $client->users()->search('some@email.test');
+
+        $this->assertEquals($responseBody, $result);
+        $this->assertCount(1, $container);
+
+        $transaction = $container[0];
+
+        /** @var Request $request */
+        $request = $transaction['request'];
+
+        $this->validateRequest(
+            $request,
+            'GET',
+            'https://floorplanner.com/api/v2/users/search.json?page=1&per_page=50&email=some%40email.test',
+            [
+                'Authorization' => 'Basic ' . base64_encode('mock_api_key:x'),
+            ]
+        );
+    }
+
+    /**
      * @covers ::show
      * @covers ::makeRequest
      * @covers ::processJsonResponse

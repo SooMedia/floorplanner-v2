@@ -61,6 +61,34 @@ class UsersEndpoint extends BaseEndpoint
     }
 
     /**
+     * Search users by their email.
+     *
+     * @param  string $email
+     * @param  int    $page
+     * @param  int    $perPage
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @see http://docs.floorplanner.com/floorplanner/api-v2#search
+     */
+    public function search(
+        string $email,
+        int $page = 1,
+        int $perPage = 50
+    ): array {
+        $response = $this->makeRequest('GET', 'users/search.json', [
+            'query' => [
+                'page' => $page,
+                'per_page' => $perPage,
+                'email' => $email,
+            ],
+        ]);
+
+        return $this->processJsonResponse($response);
+    }
+
+    /**
      * Show a user.
      *
      * @param  int $identifier
