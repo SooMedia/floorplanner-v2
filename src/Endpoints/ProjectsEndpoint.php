@@ -163,4 +163,37 @@ class ProjectsEndpoint extends BaseEndpoint
 
         return true;
     }
+
+    /**
+     * Get a generated token to fetch a project.
+     *
+     * @param  int         $identifier
+     * @param  int|null    $expiresIn
+     * @param  string|null $editorUrl
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @see http://docs.floorplanner.com/floorplanner/api-v2#token
+     */
+    public function token(
+        int $identifier,
+        int $expiresIn = null,
+        string $editorUrl = null
+    ): array {
+        $query = array_filter([
+            'expires_in' => $expiresIn,
+            'editor_url' => $editorUrl,
+        ]);
+
+        $options = !empty($query) ? ['query' => $query] : [];
+
+        $response = $this->makeRequest(
+            'GET',
+            'projects/' . $identifier . '/token.json',
+            $options
+        );
+
+        return $this->processJsonResponse($response);
+    }
 }

@@ -345,4 +345,44 @@ class ProjectsEndpointTest extends EndpointTestCase
             json_encode($requestBody)
         );
     }
+
+    /**
+     * @covers ::token
+     * @covers ::makeRequest
+     * @covers ::processJsonResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerServerException
+     * @throws \SooMedia\Floorplanner\Exceptions\FloorplannerClientException
+     */
+    public function testToken(): void
+    {
+        $responseBody = [
+            'token' => '36db96d625be097617dda5624b2550e7',
+        ];
+
+        $container = [];
+
+        $client = $this->getClient([
+            new Response(200, [], json_encode($responseBody)),
+        ], $container);
+
+        $result = $client->projects()->token(6);
+
+        $this->assertEquals($responseBody, $result);
+        $this->assertCount(1, $container);
+
+        $transaction = $container[0];
+
+        /** @var Request $request */
+        $request = $transaction['request'];
+
+        $this->validateRequest(
+            $request,
+            'GET',
+            'https://floorplanner.com/api/v2/projects/6/token.json',
+            [
+                'Authorization' => 'Basic ' . base64_encode('mock_api_key:x'),
+            ]
+        );
+    }
 }
