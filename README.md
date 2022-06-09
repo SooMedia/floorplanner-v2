@@ -6,7 +6,7 @@ PHP client for the [Floorplanner API v2](http://docs.floorplanner.com/floorplann
 
 ## Requirements
 
-The API client requires PHP version 7.2.
+The API client requires PHP version 8.1.
 
 ## Installation
 
